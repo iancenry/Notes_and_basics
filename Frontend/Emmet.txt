@@ -1,0 +1,14 @@
+1. html boilerplate = ! + tab
+2. Create a div wtih class or id = .myclass || #myclass , div.myclass.myotherclass#myid  + enter
+3. Create an element = span + tab||enter 
+4. Give an element an attribute - button[type=button],  div[data-selected].active   +  enter  - div with an attribute and class
+5. Create children elements e.g., div with a class and  a child span = div.wrapper>span.title,  header>nav>ul>li*3 -3 lis in the ul
+  header>nav>ul>li*3{Cows} - the text will go in the lis, header>nav>ul>li*3{List Item $} - the lis will have list item and the number
+ we are on e.g list item 1, list item 2 etc
+6.The previous can also be used for classes e.g header>nav>ul>li*3.class-${list item $} - adding another $ sign will 0 pad our number i.e
+header>nav>ul>li*3.class-${list item $$}  = list item 01, list item 02, list item 03
+7. Create siblings - header+main+footer
+8. Create siblings with one sibling having a child -  header>nav^main+footer ||  (header>nav)+main+footer
+9.Example of a post form - form:post>(.group>label+input:text)+(.group>label+input:number)
+
+* For css you can use shortcutse.g., w10% = width: 10%;
