@@ -1,0 +1,5 @@
+-meta tags define information about our file i.e., it gives the metadata
+-h1*3 = <h1></h1> three times
+-h1.mainTitle = <h1 class = "mainTitle"></h1>
+-Lorem3 = Lorem ipsum dolor
+- if you choose to give only width or height to an image, html will automatically adjust the aspect ratio

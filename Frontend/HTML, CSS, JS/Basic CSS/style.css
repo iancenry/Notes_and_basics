@@ -1,0 +1,74 @@
+/*grids*/
+
+.d1 {
+    background: lightskyblue;
+}
+
+.d2 {
+    background: lightsalmon;
+    /*justify-self aligns items horizontally while align-self will align vertcally*/
+    /*justify-self: center;*/
+}
+
+.d3 {
+    background: paleturquoise;
+}
+
+.d4 {
+    background: lightpink;
+    grid-area: advert;
+}
+
+.d5 {
+    background: palegreen;
+    /*2*/
+    /*grid-column: 2/4;
+    grid-row: 2/4;*/
+    /*3*/
+    grid-area: footer;
+}
+
+.container {
+    font-size: 40px;
+    width: 100%;
+    background: lightgray;
+    display: grid;
+    /*1*/
+    /*grid-template-columns: 100px 100px 100px;
+    grid-template-columns: auto 50px 10% 2fr 1fr;
+    grid-template-rows: 50px 50px;
+    grid-column-gap: 20px;*/
+    /*2*/
+    /*
+    grid-template-columns: 1fr 1fr 1fr;
+     grid-template-columns: repeat(2, 1fr 50px) 20px;  = 1fr 50px 1fr 50px 20px
+      grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));  = min and max size, autofill will change according to container size, auto-fit ensure they fill entiree container length
+    grid-template-rows: 1fr 1fr 1fr;
+    grid-gap: 10px;*/
+    /*3*/
+    grid-template-areas: "header header header" ". advert advert" "footer footer footer";
+}
+
+#flex-life {
+    display: flex;
+    flex-direction: row-reverse;
+    /*x-axis*/
+    justify-content: center;
+    /*y-axis*/
+    align-items: flex-end;
+    /*check flex-wrap,  flex-shrink, flex-grow, flex-basis*/
+    /*default flex-  flex grow, flex shrink, flex basis
+    flex: 0 1 auto;*/
+}
+
+
+// side notes - comment out  Viewport units
+avoid using 100vw since html and body already do that maybe use 100% for width
+for height use 100svh(small viewport height; best)  or 100dvh e.g  - prevent scrolling problem even in mobile view
+we write both due to browser support, the browser will use the one it understands
+header{
+	height: 100vh;
+	height: 100svh;
+
+} 
+//- never use viewport units for font sizes etc since they wont zoom in or out, you can use clamp e.g font-size: clamp(3rem, 5vw + .5rem 6rem );

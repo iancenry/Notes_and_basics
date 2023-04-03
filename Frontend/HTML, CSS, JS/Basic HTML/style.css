@@ -1,0 +1,28 @@
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    overflow-x: hidden !important;
+    font-size: 1.7rem;
+    line-height: 1.5;
+    margin: 0 2%;
+}
+
+hr {
+    border: 2px solid green;
+    border-radius: 5px;
+}
+
+table,
+th,
+td {
+    border: 1px solid black;
+    /*avoid having double borders*/
+    border-collapse: collapse;
+}
