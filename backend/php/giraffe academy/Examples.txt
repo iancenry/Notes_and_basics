@@ -1,0 +1,142 @@
+						calculator
+    <form action="site.php" method="POST"  >
+        <input type="number" placeholder="firstNum" name="firstNum">
+        <input type="text" placeholder="sign" name="sign">
+        <input type="number" placeholder="secondNum" name="secondNum">
+        <input type="submit" value="Calculate">
+    </form>
+     <?php  
+     if(isset($_POST['firstNum']) && isset($_POST['sign']) && isset($_POST['secondNum']) ){
+        $firstNum = $_POST['firstNum'];
+        $sign = $_POST['sign'];
+        $secondNum = $_POST['secondNum'];
+
+        switch($sign){
+            case "-":
+                echo $firstNum - $secondNum;
+                break;
+            case "*":
+                echo $firstNum * $secondNum;
+                break;
+            case "/":
+                echo $firstNum / $secondNum;
+                break;
+            case "+":
+                echo $firstNum + $secondNum;
+                break;
+            default:
+              echo "unrecognized sign";            
+
+        }
+
+     }else{
+         echo 'not set';
+     }
+     ?>
+
+NB: using input type number only takes whole number we can add the step attribute to specify decimal points e.g.,    <input type="number" step="0.1 or 0.001" placeholder="firstNum"  name="firstNum">
+
+
+							loop array
+ <?php  
+     $luckyNumbers = array(4,8,14,16,23,45, 5);
+     for($i=0; $i<= count($luckyNumbers) - 1; $i++){                            or $i<count($luckyNumbers)
+         echo "$luckyNumbers[$i] <br>";
+     }
+        
+
+  ?>
+
+
+			classes and objects
+Example 1
+ <?php  
+     class Book{
+         var $title; 
+         var $author;
+         var $pages;
+     }
+
+     $book1 = new Book;
+     $book1 -> title = "Harry Potter" ;
+     $book1 -> author = "Jk Rowling" ;
+     $book1 -> title = 400;
+
+     echo $book1->author;  
+   ?>
+
+Example 2 --constructors
+  class Book{
+         var $title, $author,$pages; 
+
+         function __construct($aTitle, $aAuthor, $aPages){
+             $this->title = $aTitle;             
+             $this->author = $aAuthor;             
+             $this->pages = $aPages;             
+         }
+     }
+
+     $book1 = new Book("Harry Potter", "JK Rowling", 400);
+     echo $book1->title;
+      ?>
+
+Example 3 -- object functions
+
+     <?php  
+    //  find out if a student is on the honor role
+     class Student{
+         var $name, $major,$gpa; 
+
+         function __construct($title, $major, $gpa){
+             $this->title = $title;             
+             $this->major = $major;             
+             $this->gpa = $gpa;             
+         }
+
+         function hasHoonors(){
+             if($this->gpa >= 3.5){
+                 return "true";
+             }
+             return "false";
+         }
+     }
+
+     $student1 = new Student("Jim", "Business", 2.8);
+     $student2 = new Student("Pam", "Art", 3.6);
+
+     echo $student1->hasHoonors(), "<br>";
+     echo $student2->hasHoonors();
+      ?>
+
+Example 4 - filter values given 
+  <?php  
+    //  limit values that an attribute can take with getter and setters
+    // accepted values G, PG, PG-13, R, NR(Not Rated)
+     class Movie{
+         public $title;
+         private $rating;
+
+         function __construct($title, $rating)
+         {
+             $this->title = $title;
+             // we dont use $this->rating = $rating;  since someone can still give invalid values at the constructor
+             $this->setRating($rating); 
+             
+         }
+
+         function getRating(){
+             return $this->rating;
+         }
+         function setRating($rating){
+            if($rating == "G" || $rating == "PG" || $rating == "PG-13" || $rating == "R" || $rating == "NR"){
+                $this->rating = $rating; 
+            }else{
+                $this->rating = "NR"; 
+            }
+         }
+     }
+     $avengers  =new Movie("Avengers","PG-13");
+     $avengers->setRating("Dog");
+     echo $avengers->getRating();
+     
+      ?>
