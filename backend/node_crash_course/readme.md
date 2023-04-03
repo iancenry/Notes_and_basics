@@ -71,8 +71,11 @@ Accept: text/html, application/html...
 ## Node's Event Loop
 - Single threaded and events are run asynchronously.
 - Supports concurrency via events and callbacks - When an event is triggered a callback fires so this way a system doesn't have to run a process then sit and wait for it to end and then run the next like in synchronous langauges. It simply fires an event/process and moves on and once that event is fullfilled it runs in the loop.
-- EventEmitter class is used to bind events and listenere.
-- Add event loop image
+
+- EventEmitter class is used to bind events and listener.
+
+![event loop](https://user-images.githubusercontent.com/77986239/229631195-d1d1b222-0f41-4225-9705-b37a6cff502d.PNG)
+
 
 ## Best Types of Projects For Node
 - Anything that isn't CPU intensive:
@@ -100,7 +103,8 @@ Accept: text/html, application/html...
    1. const myFile = require('/myFile')
 
 *Side note - You can run JS in node's rebel which we acces by typing node*
-include image
+
+![running JS in node](https://user-images.githubusercontent.com/77986239/229631273-d1fe823e-df0c-40dc-bca4-d45eb8bee8f8.PNG)
 
 ## Codes
  - To start:
