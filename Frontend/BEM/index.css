@@ -1,0 +1,86 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css");
+
+*{
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    box-sizing: border-box;
+}
+
+.team-cards-grid{
+    width: 90%;
+    margin: 0 auto;
+
+    display: grid;
+    /* grid-template-columns: repeat(auto-fit, 1fr);  */
+    grid-template-columns: repeat(auto-fit, minmax(250px, 280px)); 
+    grid-gap: 1em;
+}
+
+.team-card{
+    width: 100%;
+    padding: 1rem;
+    border: 1px #ddd solid;
+    border-radius: .25rem;
+    box-shadow: 1px 6px 20px rgba(0, 0, 0, 0.2);
+
+}
+
+
+.team-card__headshot{
+    width: 100%;
+    object-fit: cover;
+    height: 26rem;
+    border-radius: 0.25rem;
+}
+
+.team-card__name{
+    font-weight: bolder;
+    font-size: 20px;
+}
+
+.team-card__job-title{
+    color: #777;
+}
+.team-card__bio{
+    line-height: 1.4;
+    margin:10px 0;
+    text-align: center;
+}
+.team-card__body-wrapper{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 2rem;
+
+}
+
+.team-card__icon{
+        width: 38px;
+        height: 38px;
+        margin: 0 14px;
+        font-size: 80px;
+        padding: 10px;
+        border-radius: 50%; 
+        box-shadow: 1px 6px 20px rgba(229, 229, 229, 0.8);   
+}
+
+/*when dark*/
+
+.team-card--dark{
+        background-color: #111;
+}
+
+.team-card--dark .team-card__name{
+    color: #fff;
+}
+.team-card--dark .team-card__job-title, 
+.team-card--dark .team-card__bio{
+    color: #999;
+}
+
+.team-card--dark .team-card__icon{
+    background-color: grey;
+    box-shadow: none; 
+}
+
