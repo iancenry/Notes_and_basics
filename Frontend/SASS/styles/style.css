@@ -1,0 +1,56 @@
+.contact {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: row;
+          flex-direction: row;
+  background-color: lightblue;
+}
+
+.contact button {
+  background: #38928e;
+}
+
+header, .contactTwo {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  background-color: #295e70;
+  height: 100vh;
+  color: #774646;
+}
+
+header button, .contactTwo button {
+  background-color: #38928e;
+}
+
+header button:hover, .contactTwo button:hover {
+  background-color: red;
+}
+
+header button::after, .contactTwo button::after {
+  content: ' Hey';
+}
+
+.contactTwo {
+  background-color: pink;
+}
+/*# sourceMappingURL=style.css.map */

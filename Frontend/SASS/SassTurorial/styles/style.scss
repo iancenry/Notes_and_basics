@@ -1,0 +1,36 @@
+@import './resets';
+@import './variables';
+@function weight($weight-name) {
+    @return map-get($font-weights, $weight-name)
+}
+
+body {
+    background-color: $primary-color;
+    columns: $text-color;
+}
+
+.main {
+    @include flexCenter(row);
+    width: 80%;
+    margin: 0 auto;
+    #{&}_paragraph1 {
+        margin-top: 10px;
+        font-weight: weight(bold);
+        &:hover {
+            color: aquamarine;
+        }
+    }
+    #{&}_paragraph2 {
+        @extend .main_paragraph1;
+        &:hover {
+            color: red;
+        }
+    }
+    @include mobile {
+        flex-direction: column;
+    }
+}
+
+.light {
+    @include theme(false);
+}

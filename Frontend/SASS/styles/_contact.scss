@@ -1,0 +1,15 @@
+@mixin flexCenter($direction, $background) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+    background-color: $background;
+}
+
+.contact {
+    @include flexCenter(row, lightblue);
+}
+
+.contact button {
+    background: $primaryBtn;
+}

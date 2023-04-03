@@ -1,0 +1,21 @@
+@import './variables';
+@import './contact';
+header {
+    @include flexCenter(column, #295e70);
+    height: 100vh;
+    color: $textColor;
+    button {
+        background-color: $primaryBtn;
+        &:hover {
+            background-color: red;
+        }
+        &::after {
+            content: ' Hey';
+        }
+    }
+}
+
+.contactTwo {
+    @extend header;
+    background-color: pink;
+}

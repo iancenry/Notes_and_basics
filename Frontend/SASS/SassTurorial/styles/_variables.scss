@@ -1,0 +1,23 @@
+$primary-color: coral;
+$text-color: red;
+$font-weights:( "regular": 400, "medium": 500, "bold": 700);
+$mobile: 1000px;
+@mixin flexCenter($direction) {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: $direction;
+}
+
+@mixin theme($light-theme:true) {
+    @if $light-theme {
+        background: lighten($primary-color, 100%);
+        color: darken($text-color, 100%);
+    }
+}
+
+@mixin mobile {
+    @media(max-width: $mobile) {
+        @content;
+    }
+}
