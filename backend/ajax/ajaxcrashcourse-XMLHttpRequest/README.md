@@ -2,7 +2,11 @@
 - AJAX (Asynchronous JavaScript and XML) is a set of webdev techniques that uses various technologies on the client-side to send and receive data in various formats or create asynchronous web apps. It is just a web development technique.
 - It's all done behind the scenes without needing to reload the webpage ie., can send and receive data without interfering with the display and behaviour of th existing pages.
 - JSON replaced XML.
-- How JSON works : add the image below
+- How JSON works : 
+
+![20230307_212246](https://user-images.githubusercontent.com/77986239/229630876-c6294271-410a-4119-b508-8edef4bc11a7.jpg)
+
+![xhrcode](https://user-images.githubusercontent.com/77986239/229630949-30791fdf-6b62-4b0e-b4bd-c96890df5f85.PNG)
 
 
 # Ajax XMLHttpRequest(XHR) Object
