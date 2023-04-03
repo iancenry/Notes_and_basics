@@ -1,7 +1,29 @@
 # System Design
-- Goal: at the end I should be able to identify some basic engineering design patterns which are used to design large scale distributed systems.
+- Goal: at the end I should be able to identify some basic engineering design patterns which are used to design **large scale distributed systems**.
+
 - Large scale distibuted systems :
     * Large scale - something that is used a lot or is very intensive in terms of resources such as has alot of data or users, has frequent updates or has high performance expectations such as google maps.
-    * Distributed system - means that the server or code that is executing the program is not in one place, it is disributed all round the world so that:
+
+    * Distributed system - means that the server or code that is executing the program is not in one place, it's disributed all worldwide so that:
         1.  If one server crushes the rest of the servers can take the load.
         2.  It helps in performace - while using google maps, if a kenyan wants the map he communicates with the kenyan server since it will give the results back faster than if he were to communicate with the american server since he would have to go across continents then get the result back, this would be slower. 
+
+- To build these large scale distributed systems, the engineering team depends on `design patterns`.
+    * A design pattern is a general reusable solution to a commonly occuring problem within a given context in s/w design. They are particular practices, principles or processes used to build these systems. 
+    * For example a post on YT or IG, both need to reach a wide audience therefore both are similar problems; one piece of content needs to be made into an event and notified to millions of people and you want to notify them quickly but you don't want to put too much load on your service such that the rest of the requests coming into it stop being served. This is a common problem, so we extract out a common problem and solve it using a common solution, example of a design pattern we could use a pattern called `publisher subscriber model`
+- SEs use design patterns to make reliable, scalable and maintainable systems. This helps them convert business requirments into technical solutions.
+
+## Live streaming Application
+-  Imagine an org which broadcasts videos to millions of people ( netflix, YT or zoom), events are being broadcast to millions of people and you have to come up with technology or soln to solve this problem.
+- First you should `define the requirement from the users perspective` - the product manager needs `user feedback and data` and a well documented `business backed document` which the engineer can read and decide how they can make it happen. Amongst these you need to pick the most important features first. Example of `primary issues` in a streaming app: 
+    1. Being able to see the video - quality of video e,g 480 vs 720p is a seconday concern. Here you have to make sure that the server does not go down and that the your bandwidth requirements are sufficient.
+    2. Reduce the features to data definition - looking at the like feature, look at the abstract concept of somemone liking something, it means that a user like a particular comment so it has: a like id, a user id, a timestamp. The comment is also an abstract concept and will be mapped into an object, it has: comment id, user, creation time and the thread it falls under.
+
+- So we are taking features/abstract concepts from the product requirement document and converting them into data definitions which can then be mapped into objects which are mapped into the database.
+    * Product requirement doc => Features/abstract concepts => Data definitions => Objects => DB
+- Once you have defined the data to be stored, you need to define endpoints (APIs) through which the data can be manipulated/queried. 
+- This is done for every feature we have (core and optional/good-to-have features).
+
+- Secondly, We also have some engineering requirements:
+    1. None of the services should fail if there is an outage
+
