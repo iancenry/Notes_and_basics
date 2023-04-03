@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSS Grid Layout</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: 70% 30%;
+            gap: 1em;
+        }
+        
+        .grid-container>div {
+            background: #eee;
+            padding: 1em;
+        }
+        
+        .grid-container>div:nth-child(odd) {
+            background: #ddd;
+        }
+        
+        @media screen and (max-width:800px) {
+            .grid-container {
+                grid-template-columns: 100%;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="grid-container">
+        <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga saepe vel aliquid. Reprehenderit architecto quae impedit sint modi atque autem doloremque ut adipisci labore voluptatibus omnis eaque repellat sequi, aspernatur, veniam repellendus aliquid
+            dignissimos consectetur a voluptatem sapiente minima. Dolorum iste et vitae aspernatur ipsam natus eos quia est tempore, obcaecati neque placeat provident, quibusdam assumenda. Optio fugiat quibusdam nobis molestiae quisquam, id illum accusantium
+            blanditiis quaerat ducimus non natus est perspiciatis officiis totam recusandae sequi quod placeat eveniet distinctio?
+        </div>
+        <div>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel quidem sed mollitia et sint rerum, magni reiciendis, odit illum alias molestias exercitationem minus voluptates nostrum in accusantium, repellendus labore accusamus!
+        </div>
+        <div>
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga saepe vel aliquid. Reprehenderit architecto quae impedit sint modi atque autem doloremque ut adipisci labore voluptatibus omnis eaque repellat sequi, aspernatur, veniam repellendus aliquid
+            dignissimos consectetur a voluptatem sapiente minima. Dolorum iste et vitae aspernatur ipsam natus eos quia est tempore, obcaecati neque placeat provident, quibusdam assumenda. Optio fugiat quibusdam nobis molestiae quisquam, id illum accusantium
+            blanditiis quaerat ducimus non natus est perspiciatis officiis totam recusandae sequi quod placeat eveniet distinctio?
+        </div>
+        <div>
+            Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vel quidem sed mollitia et sint rerum, magni reiciendis, odit illum alias molestias exercitationem minus voluptates nostrum in accusantium, repellendus labore accusamus!
+        </div>
+
+    </div>
+
+
+</body>
+
+</html>

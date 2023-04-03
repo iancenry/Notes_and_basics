@@ -1,0 +1,122 @@
+@import url("https://fonts.googleapis.com/css?family=Mukta+Malar:300,700");
+/* basic styling so we can
+   see what's going on */
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  min-width: 100%;
+}
+
+header,
+.main-content,
+.sidebar,
+footer {
+  padding: 2em;
+}
+
+header {
+  background: #41D3BD;
+}
+
+.main-content {
+  background: #DE6449;
+}
+
+.sidebar {
+  background: #407899;
+}
+
+footer {
+  background: #694D75;
+}
+
+/* ======================
+   Demo stuff starts here 
+   ========================*/
+/* without grid template areas
+body {
+    display: grid;
+    grid-template-columns: 1.5em minmax(400px, 650px) minmax(200px, 500px) 1.5em;
+}
+
+header,
+footer {
+    grid-column: 1/5;
+}
+
+.main-content {
+    grid-column: 2/3;
+}
+
+.sidebar {
+    grid-column: 3/4;
+}
+*/
+/*
+//alternative better
+body {
+    display: grid;
+    grid-template-columns: 1.5em minmax(400px, 650px) minmax(200px, 500px) 1.5em;
+    grid-template-areas: "header header header header" ".main side." "footer footer footer footer"
+}
+
+header {
+    grid-area: header;
+}
+
+.main-content {
+    grid-area: main;
+}
+
+.sidebar {
+    grid-area: side;
+}
+
+footer {
+    grid-area: footer;
+}*/
+body {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 1.5em 1fr 1.5em;
+      grid-template-columns: 1.5em 1fr 1.5em;
+      grid-template-areas: "header header header" ". main ." ". side ." "footer footer footer";
+}
+
+@media only screen and (min-width: 860px) {
+  body {
+    -ms-grid-columns: 1.5em minmax(400px, 650px) minmax(200px, 500px) 1.5em;
+        grid-template-columns: 1.5em minmax(400px, 650px) minmax(200px, 500px) 1.5em;
+        grid-template-areas: "header header header header" ". main side ." "footer footer footer footer";
+  }
+}
+
+/*can use grid-area or grid-column*/
+header {
+  grid-column: header / header;
+}
+
+.main-content {
+  -ms-grid-row: 2;
+  -ms-grid-column: 2;
+  grid-area: main;
+}
+
+.sidebar {
+  -ms-grid-row: 3;
+  -ms-grid-column: 2;
+  grid-area: side;
+}
+
+footer {
+  -ms-grid-row: 4;
+  -ms-grid-column: 1;
+  -ms-grid-column-span: 3;
+  grid-area: footer;
+}
+/*# sourceMappingURL=style.css.map */

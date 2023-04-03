@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSS Grid Layout 2</title>
+    <style>
+        /*recommended to use fr since when you start to use percentages you will run into issue
+        when it comes to margin and padding especially when nesting */
+        
+        .wrapper {
+            display: grid;
+            /* grid-template-columns: 1fr 1fr 1fr; */
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1em;
+            /* will be 100px high 
+            grid-auto-rows: 100px; */
+            /*make height auto instead*/
+            grid-auto-rows: minmax(100px, auto);
+        }
+        
+        .wrapper>div {
+            background: #eee;
+            padding: 1em;
+        }
+        
+        .wrapper>div:nth-child(odd) {
+            background: #ddd;
+        }
+        
+        .nested {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-auto-rows: 70px;
+            gap: 1em;
+        }
+        
+        .nested>div {
+            border: #333 1px solid;
+            padding: 1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div>Lorem ipsum dolor sit.</div>
+        <div>Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aut harum animi iusto expedita maiores! Accusantium, doloremque ex. Accusamus soluta, sed aliquam beatae perferendis, ex dolorum sit nulla quo qui velit neque, laborum id. Perspiciatis
+            non iste natus architecto obcaecati quae.</div>
+        <div class="nested">
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+            <div>Lorem.</div>
+        </div>
+        <div>Lorem ipsum dolor sit.</div>
+        <div>Lorem ipsum dolor sit.</div>
+        <div>Lorem ipsum dolor sit.</div>
+        <div>Lorem ipsum dolor sit.</div>
+    </div>
+
+
+
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>CSS Grid Layout 2</title>
+    <style>
+        /*justifying and aligning items*/
+        
+        .wrapper {
+            display: grid;
+            grid-template-columns: 1fr 2fr 1fr;
+            grid-template-rows: minmax(100px, auto);
+            gap: 1em;
+            /* will put all the element  at the start of its column there is start, center, end, stretch(default) */
+            justify-items: stretch;
+            /* will put all the element  at the top of its column there is start, center, end, stretch(default) */
+            align-items: stretch;
+        }
+        
+        .wrapper>div {
+            background: #eee;
+            padding: 1em;
+        }
+        
+        .wrapper>div:nth-child(odd) {
+            background: #ddd;
+        }
+        
+        .box-1 {
+            align-self: start;
+        }
+        
+        .box-2 {
+            align-self: flex-end;
+        }
+        
+        .box-3 {
+            justify-self: end;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <div class="box box-1">Box 1</div>
+        <div class="box box-2">Box 2</div>
+        <div class="box box-3">Box 3</div>
+        <div class="box box-4">Box 4</div>
+
+    </div>
+
+
+
+</body>
+
+</html>

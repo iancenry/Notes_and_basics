@@ -1,0 +1,282 @@
+@import url('https://fonts.googleapis.com/css?family=Mukta+Malar:300,700');
+$sections: 1;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Mukta Malar', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 18px;
+    padding-top: 3em;
+}
+
+section {
+    padding: 12vh;
+    width: 80%;
+    max-width: 960px;
+    margin: 0 auto;
+    box-shadow: 0 .5em 2em rgba(black, .3);
+    margin-bottom: 3em;
+}
+
+.card {
+    margin: 1.5%;
+    width: 30%;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    img {
+        max-width: 100%;
+    }
+    p {
+        padding: .5em;
+        margin: 0;
+    }
+}
+
+.sidebar {
+    background: #4D7C8A;
+    color: rgba(white, .9);
+    padding: 1em;
+}
+
+.main {
+    background: #E4FDE1;
+    color: #333;
+    padding: 1em;
+}
+
+footer {
+    background: #476A6F;
+    color: white;
+    padding: 1em;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Mukta+Malar:300,700');
+$sections: 1;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Mukta Malar', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 18px;
+    padding-top: 3em;
+}
+
+section {
+    padding: 12vh;
+    width: 80%;
+    max-width: 960px;
+    margin: 0 auto;
+    box-shadow: 0 .5em 2em rgba(black, .3);
+    margin-bottom: 3em;
+}
+
+.card {
+    margin: 1.5%;
+    width: 30%;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    img {
+        max-width: 100%;
+    }
+    p {
+        padding: .5em;
+        margin: 0;
+    }
+}
+
+.sidebar {
+    background: #4D7C8A;
+    color: rgba(white, .9);
+    padding: 1em;
+}
+
+.main {
+    background: #E4FDE1;
+    color: #333;
+    padding: 1em;
+}
+
+footer {
+    background: #476A6F;
+    color: white;
+    padding: 1em;
+}
+
+@import url('https://fonts.googleapis.com/css?family=Mukta+Malar:300,700');
+$sections: 1;
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Mukta Malar', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    font-size: 18px;
+    padding-top: 3em;
+}
+
+section {
+    padding: 12vh;
+    width: 80%;
+    max-width: 960px;
+    margin: 0 auto;
+    box-shadow: 0 .5em 2em rgba(black, .3);
+    margin-bottom: 3em;
+}
+
+.card {
+    margin: 1.5%;
+    width: 30%;
+    text-align: center;
+    background: white;
+    border: 1px solid black;
+    img {
+        max-width: 100%;
+    }
+    p {
+        padding: .5em;
+        margin: 0;
+    }
+}
+
+.sidebar {
+    background: #4D7C8A;
+    color: rgba(white, .9);
+    padding: 1em;
+}
+
+.main {
+    background: #E4FDE1;
+    color: #333;
+    padding: 1em;
+}
+
+footer {
+    background: #476A6F;
+    color: white;
+    padding: 1em;
+}
+
+.float-intro {
+    img {
+        float: left;
+        margin-right: 1em;
+    }
+}
+
+.float-multiple {
+    min-height: 100vh; // to prevent issues
+    .float {
+        height: 150px;
+        width: 150px;
+        background: pink;
+        border: 2px solid red;
+        float: left;
+    }
+}
+
+.clearfix::after {
+    display: table;
+    content: '';
+    clear: both;
+}
+
+.float-layout-one {
+    background: #a9e5bb;
+    .col {
+        width: 30%;
+        margin-right: 3%;
+        float: left;
+    }
+}
+
+.float-layout-two {
+    .sidebar--left {
+        width: 25%;
+        float: left;
+    }
+    .main {
+        width: 50%;
+        float: left;
+    }
+    .sidebar--right {
+        width: 25%;
+        float: right;
+    }
+    footer {
+        clear: both;
+    }
+}
+
+.float-layout-three {
+    background: #E4FDE1;
+    min-height: 100vh;
+    /*problem is when one card is even 1px taller it affects the arrangement that's why we use flex box*/
+    /* .card {
+        float: left;
+    }*/
+}
+
+.flex-layout-one {
+    .flex-parent {
+        /*remove display flex and see the change*/
+        display: flex;
+        .card {
+            width: 100%;
+        }
+    }
+}
+
+.flex-layout-two {
+    .flex-parent {
+        // flex-direction: column;
+        display: flex;
+        flex-wrap: wrap;
+        .card {
+            width: 30%;
+        }
+    }
+}
+
+.grid-layout-one {
+    .card {
+        width: 100%;
+    } 
+    .grid-parent {
+        display: grid;
+        //grid-template-columns: 1fr 1fr 1fr; or  grid-template-columns: repeat(3,1fr);
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        //grid-template-rows: 1fr 2fr;
+        grid-gap: 1em;
+    }
+}
+
+.grid-layout-two {
+    display: grid;
+    grid-template-columns: 1fr 4fr 1fr;
+    .title {
+        /*or 1/4 start at line 1 and end at line 4*/
+        grid-column: 1 / -1;
+    }
+    footer {
+        grid-column: 1 / 4;
+    }
+}
+
+
+/*fr takes a fraction of the empty space and that's the width- read more */
