@@ -25,5 +25,8 @@
 - This is done for every feature we have (core and optional/good-to-have features).
 
 - Secondly, We also have some engineering requirements:
-    1. None of the services should fail if there is an outage
+    1. None of the services should fail if there is an outage - if there is an outage in Kenya and the comment service is in Kenya you don't want the entire system to collapse so you have either:
+        - multiple servers spread across the world to avoid a single point of failure. 
+        - You can also have multiple servers in Kenya so that if one fails another picks up its responsibility. Here we have data duplication because of the speed in which the other servrer is able to pick up the responsibility or you have some sort of partitioning where half of the users access one server and the other half access the other therefore incase of a failure only half of the users are affected.
+    2. Extensibility - it's not just about the technical solution you come up with, but also how easy it is to change that solution. 
 
