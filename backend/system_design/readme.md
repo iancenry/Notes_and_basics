@@ -49,9 +49,14 @@
         - A challenge can also be a feature request whereby an artist wants to have a two way communication with some his audience so you have to display this user(s) to the artist and still broadcast the two or more parties to everyone else watching.
 
     * With those requirements we can design a live streaming app. There are 2 ways to approach this.
-    1. From customer to server and then to database. (black marker)
-    2. From database to server , so what kind of data I need to store  to enabe the server, and what kind of  APIs do I need to expose  to enable the customers to use the product. (red marker in image)
-    (insert image 1)
+        1. From customer to server and then to database. (black marker)
+            Customers => Server => Database
+        2. From database to server , so what kind of data I need to store  to enabe the server, and what kind of  APIs do I need to expose  to enable the customers to use the product. (red marker in image)
+            Database => Server => Customers
+        (insert image 1)
+
+    - Both are fine but require different ways of thinking:
+        * In the database approach we need to consider what kind of data we need to store
 
  
 
