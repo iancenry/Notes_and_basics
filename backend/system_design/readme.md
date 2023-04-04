@@ -28,5 +28,20 @@
     1. None of the services should fail if there is an outage - if there is an outage in Kenya and the comment service is in Kenya you don't want the entire system to collapse so you have either:
         - multiple servers spread across the world to avoid a single point of failure. 
         - You can also have multiple servers in Kenya so that if one fails another picks up its responsibility. Here we have data duplication because of the speed in which the other servrer is able to pick up the responsibility or you have some sort of partitioning where half of the users access one server and the other half access the other therefore incase of a failure only half of the users are affected.
-    2. Extensibility - it's not just about the technical solution you come up with, but also how easy it is to change that solution. 
+    2. Extensibility - it's not just about the technical solution you come up with, but also how easy it is to change that solution. Build a system that can `scale` and `extend` as and when requirements change and more users join.
+    3. Testing - this is an important part of system design. Requests, common and edge cases have to be tested to see if they have a sensible flows in the system. Sophisticated tools can be used to load test, have capacity estimation and test design before getting into the code.
+- Example recap: If we have a live streaming system, the way we would go about designing it is:
+    * The requirements would be:
+        1. Streaming video
+        2. Processing video
+        3. Broadcasting - sending video to multiple customers
+        4. failproof
+        5. Showing Advertisement
+        6. Reactions
+        7. Disclaimers/news flashes
+        9. Having greaceful degradation of video quality - incase of low bandwidth
+        10. Multiple device support etc
+        - The core requirement is showing a video first so that is what we pick first; this means that we have to capture a video from a source, shooting at 8k, and we should be able to store it in a server so that it can be queried later. In a live streaming system the *query later* part is probably in milliseconds so we might no want to query that data at all but directly stream it from the video camera to millions of people.
+        - Taking a step back it looks impractical since if I am shooting raw footage at 8k, sending  that much data to people on mobile phones is unreasonable so we need to store it in some sort of a DB or file system and stream/query that out and distribute to customers. But we don't want 
+
 
