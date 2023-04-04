@@ -48,4 +48,11 @@
         - As engineers we have to think of various failure scenarios: what if the DB crushes, what if a firewall on the internet starts blocking all your requests, what if one of the services starts misbehaving maybe due to a bug being introduced or a malicious person gains access and changes the code; we will have to use some design tools.
         - A challenge can also be a feature request whereby an artist wants to have a two way communication with some his audience so you have to display this user(s) to the artist and still broadcast the two or more parties to everyone else watching.
 
+    * With those requirements we can design a live streaming app. There are 2 ways to approach this.
+    1. From customer to server and then to database. (black marker)
+    2. From database to server , so what kind of data I need to store  to enabe the server, and what kind of  APIs do I need to expose  to enable the customers to use the product. (red marker in image)
+    (insert image 1)
+
+ 
+
 
