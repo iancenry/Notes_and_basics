@@ -56,8 +56,33 @@
         (insert image 1)
 
     - Both are fine but require different ways of thinking:
-        * In the database approach we need to consider what kind of data we need to store
+        * In the database approach we need to consider what kind of data we need to store; often we think of the pieces of data as tables if it is a video it will have the columns for ID, Name, Size, Data
+        * Customer approach is better since customers get to define their problems which are fulfilled using APIs on the server which are then fulfilled by storing some sort of data in the DB then the data is mapped onto tables. (the approach we will use)
 
- 
+    - In our case customers are live streaming customers who may be streaming from different device types which need to be catered to; this is a frontend UI design problem. System design deals with the distributed systems backend part of things. Clients need to be able to query the server in real-time so our server needs to have:
+        * API - an API like getVideoFrame needs to take in video `id`, `device type` so as to send the video resolution depending on device, `offset` you have already seen the first ten minutes so show me everytging  else after.
+            - A getVideoFrame API also needs to return something, the return type could be some video frames each 10 seconds long so a single frame is what we send back such that it is a particular video, for a certain device and after 10 minutes(the offset). SO `10 minutes` to `10 min and 10 sec` that frame is sent to the client.
+            - we need to be able to POST a comment so we are manipulating or adding some data to the server. So we have a comment `id`, `data`, `author`, `video_id` video on which the comment was made.
+        * On teh database side we need to think about the kind of data we need to store to satisfy the above APIs. The kind of DB we can use is an SQL DB. 
+
+         - add rough image
+
+         - with these design we have an incomplete high-level rough idea of how we are goming to be talking to each other not what we will use to make this happen. So we got o the implmentation details.
+    
+    - Implementation deatails.
+        - First on the client we ask if there is something we need to do which is yes. Different API's require different behaviours. Posting a comment means that we post once and maybe we will query it soon but we dont need contionous updates on the comment so notifications can be given periodically or we dont need notifications on that comment at all or after a few months, so here we have non-real time beahvious. For frames when we ask for a video frame we usually need to ask for the next video frame immeadiately after that, this is a continous behavior.
+        - So we need to use different netwokr protocols for the videoFrame and comment APIs. FOr a comment we can use HTTP which gives us the benefit that you have a stateless server, you don't need to store any info when handling a request. A stateless server  is basically if have no idea where you are from and what you want so define everything in the request i.e from the client. With HTTP since it is stateless the server is kept simple such that if it crashes there is no context or memory that is lost in the server. Also you can add other servers more easily since every request comes with the total context.
+        - For the video frame a better protocol would be to use one designed for video transmission. For example `TCP protocol` (reliable protocol) or `UDP protocol` (real time effiecient protocol).
+        - For us between the client and server we use `WebRTC protocol` whcih is a peer-to-peer protocol so we are able to send video from the server to the client. Some protocls have a client-to-server expectation so the client can make requests but server cant send response to the client, this is better for the comments part.
+        - On the DB side we need to consider how we will talk to the server, most DB solutions (MySQL, PostgreSQL) define how exactly the client interacts with the DB. So we don't need to think much when it comes to the DB talking to the server.
+        - The problem is therefore which database we should use, File System/SQL/NoSQL; look at tradeoffs. Here using mySQL will be expensive and slow and since video data is a file we can store it in a file system. And you dont want to build a file system yourself so you use a well know FS solution eg HDFS, Amazon S3 or use a video hosting solution like vimeo. Benefit of using Amazon S3 or HDFS is that they are easy to query, cheap and can store large files. With a DB it is not cheap and you can store large files but capabilities to update static files like video files might not be relevant.
+        - For comments and user tables they can have SQL solutions(mySQL, Postgresql) but considering the complexity of their data structures such as persisitng every comment and those nested in them it is better to use a NoSQL database whcih is better for scaling the comments.
+            - add rough-2 image
+        - Now we have a rough blueprint of how customers will access APIs and how the APIs will access the data in the DB. the data in our DB can be filled by a customer or by an external service, in a live streaming system it will probaly be a really high definition camera that is recording live and persisitng to our DB so we use `RTMP: Real Time Media Protocol` which ensures we dont lose any data when recorinf, with WebRTC we might lose data since it is an end user watching a live stream and they want data quick an real but at the source we dont want to lose any data since it will affect everyone. Therefore between the camera and DB we need to  setup a high bandwidth expansive network.
+        - add rough-3
+    
+    - Now we can look at how we convert the RAW data and serve to customers:
+        - There needs to be a transmission service which takes the live stream (RAW video) and converts it into different resolutions. This is done by breaking the video to segments of 10 seconds and give each segment to some programs that will process it into the different resolutions and formats for the different devices. Some formats include: h.264 etc. 
+        - In short we take 
 
 
