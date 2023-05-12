@@ -69,7 +69,7 @@
 
          - with these design we have an incomplete high-level rough idea of how we are goming to be talking to each other not what we will use to make this happen. So we got o the implmentation details.
     
-    - Implementation deatails.
+    - Implementation details.
         - First on the client we ask if there is something we need to do which is yes. Different API's require different behaviours. Posting a comment means that we post once and maybe we will query it soon but we dont need contionous updates on the comment so notifications can be given periodically or we dont need notifications on that comment at all or after a few months, so here we have non-real time beahvious. For frames when we ask for a video frame we usually need to ask for the next video frame immeadiately after that, this is a continous behavior.
         - So we need to use different netwokr protocols for the videoFrame and comment APIs. FOr a comment we can use HTTP which gives us the benefit that you have a stateless server, you don't need to store any info when handling a request. A stateless server  is basically if have no idea where you are from and what you want so define everything in the request i.e from the client. With HTTP since it is stateless the server is kept simple such that if it crashes there is no context or memory that is lost in the server. Also you can add other servers more easily since every request comes with the total context.
         - For the video frame a better protocol would be to use one designed for video transmission. For example `TCP protocol` (reliable protocol) or `UDP protocol` (real time effiecient protocol).
@@ -81,12 +81,24 @@
         - Now we have a rough blueprint of how customers will access APIs and how the APIs will access the data in the DB. the data in our DB can be filled by a customer or by an external service, in a live streaming system it will probaly be a really high definition camera that is recording live and persisitng to our DB so we use `RTMP: Real Time Media Protocol` which ensures we dont lose any data when recorinf, with WebRTC we might lose data since it is an end user watching a live stream and they want data quick an real but at the source we dont want to lose any data since it will affect everyone. Therefore between the camera and DB we need to  setup a high bandwidth expansive network.
         - add rough-3
     
-    - Above we have looked at the solution from a high level, next we are getting into the low level details of designing the system. First we look at how we convert the RAW data and serve to customers:
+    - Above we have looked at the solution from a high level, next we are getting into the niitty gritty details of designing the system. First we look at how we convert the RAW data and serve to customers:
         - There needs to be a transmission service which takes the live stream (RAW video) and converts it into different resolutions. This is done by breaking the video to segments of 10 seconds and give each segment to some programs that will process it into the different resolutions and formats for the different devices. Some formats include: h.264 etc. 
         - In short we take our raw video footage and convert it into a combination of a resolution and format. We can use a map-reduce design pattern where we take a video and split it into 10-seconds-long pieces and sendit to different servers to get different outputs. Apart from transforming the video we might also want to compress it in another server depending on the one that is available. Here we get different outputs again which can be stored in a DB. 
             - add map-reduce image
     - Next we look at how the video will reach the users:
         - The data has to go to the server which is exposing some APIs, when user queries data using a protocol (eg WebRTC) they should be able to get it. WebRTC is good for video confrences. However in this case it is a broadcast not a conference so we to a protocol suitable for streaming ie., `MPEG-DASH(Dynamic Adaptive Streaming over HTTP)`, with this protocol it means that depending on the bandwidth-network a user is on, they'll be able to see high or low quality video automatically without the user handling the switch. We can also use `HLS protocol` for IOS or mac devices.
-    - Next we need to consider what kind of data we need to store in the server
+    - Next we need to consider what kind of data we need to store in the server:
+        - Do we want to store any data at all or make it stateless? Statelessness is useful when it comes to request serving and keeping context for every user but for some things you can keep some state like in video you can cache the last 10 minutes of video in the server so that anybody asking for the video that is in the last 10 mins will get it from the cache instead of making a network call all the way to the DB thus saving time and bandwidth. 
+            - Add update 1 image
+    - So this are the considerations when it comes to system design; our use case is of a large scale distributed system so our assumption is that there alot of user thus making this much planning and this kind of a design makes sense cost-wise and enginerring effort wise. There needs to be fault tolerance and perfomance so we can use CDN solutions to persist some static data and have clients pull the static data from there such as webpages and video data.
+        - update 2 image
 
+- Important things to notice:
+1. Define the requirements as abstract concepts (Objects)
+2. Objects can be manipulated and queried using API's on server
+3. The data representation need to be stored in databases
 
+- Once we are done with the above high level blueprint we start thinking about what we need exactly to make the system possible: `protocols`, `database solutions`, sometimes `intermediate design pattern solutions` (load balancers, message queues) which have been converted into tools by various companies for example AWS, interaction of the tools and services.
+
+## Low Level Design
+44:54
