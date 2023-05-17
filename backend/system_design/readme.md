@@ -101,4 +101,114 @@
 - Once we are done with the above high level blueprint we start thinking about what we need exactly to make the system possible: `protocols`, `database solutions`, sometimes `intermediate design pattern solutions` (load balancers, message queues) which have been converted into tools by various companies for example AWS, interaction of the tools and services.
 
 ## Low Level Design
-44:54
+- Previously we were looking at high level design where we tok different components of the entire system and thought about how they will interact with each other using network calls, APIs, and sending data from one place to another.
+- In LLD we will take certain functions of these services and try to code them out. 
+- The code functionality of a live stream is to be able to fetch & view a video, and continue fetching the video until the video ends. We aren't looking at how we onboard the video ie how the video moves from the source camera to our system, we are looking at the user side on how it will be consumed. Tod to this we have 2 approaches:
+    1. To think of the code: if you're coding in OOP you need to think about objects and their interaction, possible inheritance; this is sometimes hard to think of unless the requirements are extremely well specified or they are so generic that you have to look at the data you're storing first before you think of the functionlaity.
+    2. To think of the users (recommeneded): what are the actions that a user can perform?
+        -  On a phone/tablet a user will be scrolling to a particular place to watch the video (scrubbing)
+        - click on play to play video at timestamp x
+        - pause the video and in that case do you continue fetching more segments from the backend(having buffered video frames) or  do you stop fetching segemnts; depends on the UX you want. Maybe we can fetch the next 2 minutes of video from the `last seek point` despite pausing.
+        - Adaptive video quality - depending on the device.
+        - Upto what point have you played the video - if a user logs out and comes back they should be able to continue from the `last watched seek position` which should be stored somewhere. We can cache the video or you might want to do that for only recently played videos.
+
+- What we are considering here is: `memory optimizations`, `user behaviour`, `API calling`. Depeding on seniority or use case, you might have issues of `concurrency`, `latency` and `throughput`. Some requirements can be considered more than others depending on context.
+- We use a structured approach to solve problems, the first tool we use are `use case diagrams`.
+    1. Use case diagrams - we think about the use cases we need to fulfill for every user. An actor is a person that can do actions eg videographer, admin, customer. Sample use case from the customer:  
+        - add use case image
+        - In system design the expectation is that if there is a Product Requirement Doc (PRD) usually it is just one use case where you add a feature and each feature is important.
+        - The next step is to convert the requirements represented by use cases into class and objects; use-case diagrams behave as a foundation to come up with class diagrams.
+        - With the use case such as *view at max quality allowed by network device* the customer isn't actually doing this manually so it should be handled by the system so there needs to be another actor but not someone who does things physically who will interacti with the syem eg a controller/rate limiter/ a service or a tool. For us we will use a network protocol, more specifically an adaptive bit-rate protocol such as `HTTP-DASH` removing the need of a service like a rate limiter. Dynamic Adaptive Streaming over HTTP(DASH), also known as MPEG-DASH is an adaptive bitrate streaming technique that enables high quality streaming of media content over the internet delivered from conventional HTTP web servers.
+        - For the `play video from a timestamp` - means that every video needs to store a timestamp for a particular user. This has to be taken cared of by the video consuming service. Think in terms of API eg play() where it takes in a user, video and timestamp; the return type will be a video frame. **The clearer the APIs, the easier it will be to come up with Low Level Design.**
+        - For the `have non-stop play when watching videos` we need to get future frames.
+        - add case 1 image
+
+        - From the use case diagram above, the `play` and `getVideoFrame` APIs are quite similar. At this point we ask ourselves `what does this product need?` and `Is playing the video different than fetching the future content?` Yes it is even though they are doing the same thing where in play the user is saying play me a video from this timestamp while in the other, the video player is saying `get me the video frame for this timestamp`. They are similar but the use cases are different. These 2 APIs are very similar so its better to merge them on the server side.
+        - add case 2 image
+    
+    2. Class Diagrams - For every class we need to store states(data an object needs to perform behaviours eg to speak you need a throat, tongue, brain) and behaviours. For a video the states are `ID`,  `Frames`, `Metadata` and for behaviours `getFrame`.
+     - add class diagram image
+    
+    3. Sequence diagrams - in most cases a use case and class diagram are sufficient however in places where interaction is complex we need sequence diagrams which define the sequence of actions. Here we have three timeline represented by an x-axis.
+        - add sequence one image
+        - add sequence two image
+- Finally the syetem can be coded referncing the created class diagrams.
+```java
+    public class VideoConsumingService{
+        private Database database;
+
+        public int seekTime(String userId, String videoId){
+            WatchedVideo watchedvideo = database.getWatchedVideo(userId, videoId);
+            return watchedVideo.getSeekTime();
+        }
+
+    }
+
+    class VideoService{
+        private FileSystem fileSystem;
+
+        public Frame getFrame(String videoId, int timestamp){
+            Video video = fileSystem .getVideo(videoId);
+            return video.getFrame(timestamp);
+        }
+    }
+
+    class FileSystem{
+        public Video getVideo(String videoId){
+            return null;
+        }
+    }
+
+    class Database{
+        public WatchedVideo getWatchedVideo(String userId, String videoId){
+            return null;
+        }
+    }
+
+    class Video {
+        
+        String id;
+        Frame[] frames;
+        String jsonMetaData;  
+
+        public Frame getFrame(int timestamp){
+            for(int i = 0; i < frames; i++){
+                if(frames[i].startTimestamp <= timestamp && frames[i].endTimestamp > timestamp) {
+                    return frames[i];
+                }               
+            }
+            throw new IndexOutOfBoundsException();
+        }      
+    }
+
+    class Frame{
+        public static int frameTime = 10;
+        byte[] bytes;
+        int startTimestamp;
+        int endTimestamp;
+    }
+
+    class User{
+        String id;
+        String  name;
+        String email;
+
+        public String getId(){
+            return id;
+        }
+    }
+
+    class WatchedVideo{
+        String id;
+        String videoId;
+        String userId;
+        int seekTime;
+
+        public int getSeekTime(){
+            return seekTime;
+        }
+    }
+``` 
+
+- Use `lucid chart` to make the diagrams.
+ 
