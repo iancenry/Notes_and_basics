@@ -53,7 +53,8 @@
             Customers => Server => Database
         2. From database to server , so what kind of data I need to store  to enabe the server, and what kind of  APIs do I need to expose  to enable the customers to use the product. (red marker in image)
             Database => Server => Customers
-        (insert image 1)
+            
+         ![image1](https://github.com/iancenry/Notes_and_basics/assets/77986239/059ffeef-2673-4be2-b0a8-a51e35eb64e1)
 
     - Both are fine but require different ways of thinking:
         * In the database approach we need to consider what kind of data we need to store; often we think of the pieces of data as tables if it is a video it will have the columns for ID, Name, Size, Data
@@ -65,7 +66,7 @@
             - we need to be able to POST a comment so we are manipulating or adding some data to the server. So we have a comment `id`, `data`, `author`, `video_id` video on which the comment was made.
         * On teh database side we need to think about the kind of data we need to store to satisfy the above APIs. The kind of DB we can use is an SQL DB. 
 
-         - add rough image
+         ![rough](https://github.com/iancenry/Notes_and_basics/assets/77986239/20265aa0-168d-4638-bf77-1d5532f70ee2)
 
          - with these design we have an incomplete high-level rough idea of how we are goming to be talking to each other not what we will use to make this happen. So we got o the implmentation details.
     
@@ -77,21 +78,30 @@
         - On the DB side we need to consider how we will talk to the server, most DB solutions (MySQL, PostgreSQL) define how exactly the client interacts with the DB. So we don't need to think much when it comes to the DB talking to the server.
         - The problem is therefore which database we should use, File System/SQL/NoSQL; look at tradeoffs. Here using mySQL will be expensive and slow and since video data is a file we can store it in a file system. And you dont want to build a file system yourself so you use a well know FS solution eg HDFS, Amazon S3 or use a video hosting solution like vimeo. Benefit of using Amazon S3 or HDFS is that they are easy to query, cheap and can store large files. With a DB it is not cheap and you can store large files but capabilities to update static files like video files might not be relevant.
         - For comments and user tables they can have SQL solutions(mySQL, Postgresql) but considering the complexity of their data structures such as persisitng every comment and those nested in them it is better to use a NoSQL database whcih is better for scaling the comments.
-            - add rough-2 image
+        
+        ![rough-2](https://github.com/iancenry/Notes_and_basics/assets/77986239/f9dad4ce-f2c2-431e-b1ff-c7570da34b95)
+
         - Now we have a rough blueprint of how customers will access APIs and how the APIs will access the data in the DB. the data in our DB can be filled by a customer or by an external service, in a live streaming system it will probaly be a really high definition camera that is recording live and persisitng to our DB so we use `RTMP: Real Time Media Protocol` which ensures we dont lose any data when recorinf, with WebRTC we might lose data since it is an end user watching a live stream and they want data quick an real but at the source we dont want to lose any data since it will affect everyone. Therefore between the camera and DB we need to  setup a high bandwidth expansive network.
-        - add rough-3
-    
+     
+    ![rough-3](https://github.com/iancenry/Notes_and_basics/assets/77986239/7d808394-f85a-40f9-8c41-6ac1590aefdd)
+
     - Above we have looked at the solution from a high level, next we are getting into the niitty gritty details of designing the system. First we look at how we convert the RAW data and serve to customers:
         - There needs to be a transmission service which takes the live stream (RAW video) and converts it into different resolutions. This is done by breaking the video to segments of 10 seconds and give each segment to some programs that will process it into the different resolutions and formats for the different devices. Some formats include: h.264 etc. 
         - In short we take our raw video footage and convert it into a combination of a resolution and format. We can use a map-reduce design pattern where we take a video and split it into 10-seconds-long pieces and sendit to different servers to get different outputs. Apart from transforming the video we might also want to compress it in another server depending on the one that is available. Here we get different outputs again which can be stored in a DB. 
-            - add map-reduce image
+
+         ![map-reduce](https://github.com/iancenry/Notes_and_basics/assets/77986239/5806d006-90ff-4539-8fda-3c489d949331)
+
+            
     - Next we look at how the video will reach the users:
         - The data has to go to the server which is exposing some APIs, when user queries data using a protocol (eg WebRTC) they should be able to get it. WebRTC is good for video confrences. However in this case it is a broadcast not a conference so we to a protocol suitable for streaming ie., `MPEG-DASH(Dynamic Adaptive Streaming over HTTP)`, with this protocol it means that depending on the bandwidth-network a user is on, they'll be able to see high or low quality video automatically without the user handling the switch. We can also use `HLS protocol` for IOS or mac devices.
     - Next we need to consider what kind of data we need to store in the server:
         - Do we want to store any data at all or make it stateless? Statelessness is useful when it comes to request serving and keeping context for every user but for some things you can keep some state like in video you can cache the last 10 minutes of video in the server so that anybody asking for the video that is in the last 10 mins will get it from the cache instead of making a network call all the way to the DB thus saving time and bandwidth. 
-            - Add update 1 image
+        
+        ![update 1](https://github.com/iancenry/Notes_and_basics/assets/77986239/9954d5a1-d96f-4058-9c2f-4811f05d4b1b)
+           
     - So this are the considerations when it comes to system design; our use case is of a large scale distributed system so our assumption is that there alot of user thus making this much planning and this kind of a design makes sense cost-wise and enginerring effort wise. There needs to be fault tolerance and perfomance so we can use CDN solutions to persist some static data and have clients pull the static data from there such as webpages and video data.
-        - update 2 image
+    - 
+      ![update 2](https://github.com/iancenry/Notes_and_basics/assets/77986239/21928cd7-ced6-4208-81c3-164ffbbde0ed)
 
 - Important things to notice:
 1. Define the requirements as abstract concepts (Objects)
@@ -114,24 +124,32 @@
 
 - What we are considering here is: `memory optimizations`, `user behaviour`, `API calling`. Depeding on seniority or use case, you might have issues of `concurrency`, `latency` and `throughput`. Some requirements can be considered more than others depending on context.
 - We use a structured approach to solve problems, the first tool we use are `use case diagrams`.
-    1. Use case diagrams - we think about the use cases we need to fulfill for every user. An actor is a person that can do actions eg videographer, admin, customer. Sample use case from the customer:  
-        - add use case image
+    1. Use case diagrams - we think about the use cases we need to fulfill for every user. An actor is a person that can do actions eg videographer, admin, customer. Sample use case from the customer: 
+   
+   ![use case](https://github.com/iancenry/Notes_and_basics/assets/77986239/3ab3c920-f41e-4670-859c-c43bdf520fa2)
+      
         - In system design the expectation is that if there is a Product Requirement Doc (PRD) usually it is just one use case where you add a feature and each feature is important.
         - The next step is to convert the requirements represented by use cases into class and objects; use-case diagrams behave as a foundation to come up with class diagrams.
         - With the use case such as *view at max quality allowed by network device* the customer isn't actually doing this manually so it should be handled by the system so there needs to be another actor but not someone who does things physically who will interacti with the syem eg a controller/rate limiter/ a service or a tool. For us we will use a network protocol, more specifically an adaptive bit-rate protocol such as `HTTP-DASH` removing the need of a service like a rate limiter. Dynamic Adaptive Streaming over HTTP(DASH), also known as MPEG-DASH is an adaptive bitrate streaming technique that enables high quality streaming of media content over the internet delivered from conventional HTTP web servers.
         - For the `play video from a timestamp` - means that every video needs to store a timestamp for a particular user. This has to be taken cared of by the video consuming service. Think in terms of API eg play() where it takes in a user, video and timestamp; the return type will be a video frame. **The clearer the APIs, the easier it will be to come up with Low Level Design.**
         - For the `have non-stop play when watching videos` we need to get future frames.
-        - add case 1 image
+         
+       ![case 1](https://github.com/iancenry/Notes_and_basics/assets/77986239/dc0fff58-ad27-480c-b1c5-6c1d2270333a)
 
         - From the use case diagram above, the `play` and `getVideoFrame` APIs are quite similar. At this point we ask ourselves `what does this product need?` and `Is playing the video different than fetching the future content?` Yes it is even though they are doing the same thing where in play the user is saying play me a video from this timestamp while in the other, the video player is saying `get me the video frame for this timestamp`. They are similar but the use cases are different. These 2 APIs are very similar so its better to merge them on the server side.
-        - add case 2 image
+        
+        ![case 2](https://github.com/iancenry/Notes_and_basics/assets/77986239/fd98d5bb-3d15-483a-a32b-6b51925cccee)
+
     
     2. Class Diagrams - For every class we need to store states(data an object needs to perform behaviours eg to speak you need a throat, tongue, brain) and behaviours. For a video the states are `ID`,  `Frames`, `Metadata` and for behaviours `getFrame`.
-     - add class diagram image
+    
+     ![class diagram](https://github.com/iancenry/Notes_and_basics/assets/77986239/6977b65f-a719-4a92-9ae8-786de2d7cf75)
     
     3. Sequence diagrams - in most cases a use case and class diagram are sufficient however in places where interaction is complex we need sequence diagrams which define the sequence of actions. Here we have three timeline represented by an x-axis.
-        - add sequence one image
-        - add sequence two image
+    4. 
+        ![sequence 1](https://github.com/iancenry/Notes_and_basics/assets/77986239/8b94bc73-107d-4baf-a68d-f38120cd9fa2)
+        ![sequence 2](https://github.com/iancenry/Notes_and_basics/assets/77986239/0772b1b2-6461-4f40-aa85-74a64b200757)
+
 - Finally the syetem can be coded referncing the created class diagrams.
 ```java
     public class VideoConsumingService{
