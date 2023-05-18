@@ -128,17 +128,17 @@
    
    ![use case](https://github.com/iancenry/Notes_and_basics/assets/77986239/3ab3c920-f41e-4670-859c-c43bdf520fa2)
       
-        - In system design the expectation is that if there is a Product Requirement Doc (PRD) usually it is just one use case where you add a feature and each feature is important.
-        - The next step is to convert the requirements represented by use cases into class and objects; use-case diagrams behave as a foundation to come up with class diagrams.
-        - With the use case such as *view at max quality allowed by network device* the customer isn't actually doing this manually so it should be handled by the system so there needs to be another actor but not someone who does things physically who will interacti with the syem eg a controller/rate limiter/ a service or a tool. For us we will use a network protocol, more specifically an adaptive bit-rate protocol such as `HTTP-DASH` removing the need of a service like a rate limiter. Dynamic Adaptive Streaming over HTTP(DASH), also known as MPEG-DASH is an adaptive bitrate streaming technique that enables high quality streaming of media content over the internet delivered from conventional HTTP web servers.
-        - For the `play video from a timestamp` - means that every video needs to store a timestamp for a particular user. This has to be taken cared of by the video consuming service. Think in terms of API eg play() where it takes in a user, video and timestamp; the return type will be a video frame. **The clearer the APIs, the easier it will be to come up with Low Level Design.**
-        - For the `have non-stop play when watching videos` we need to get future frames. /
+      - In system design the expectation is that if there is a Product Requirement Doc (PRD) usually it is just one use case where you add a feature and each feature is important.
+      - The next step is to convert the requirements represented by use cases into class and objects; use-case diagrams behave as a foundation to come up with class diagrams.
+      - With the use case such as *view at max quality allowed by network device* the customer isn't actually doing this manually so it should be handled by the system so there needs to be another actor but not someone who does things physically who will interacti with the syem eg a controller/rate limiter/ a service or a tool. For us we will use a network protocol, more specifically an adaptive bit-rate protocol such as `HTTP-DASH` removing the need of a service like a rate limiter. Dynamic Adaptive Streaming over HTTP(DASH), also known as MPEG-DASH is an adaptive bitrate streaming technique that enables high quality streaming of media content over the internet delivered from conventional HTTP web servers.
+      - For the `play video from a timestamp` - means that every video needs to store a timestamp for a particular user. This has to be taken cared of by the video consuming service. Think in terms of API eg play() where it takes in a user, video and timestamp; the return type will be a video frame. **The clearer the APIs, the easier it will be to come up with Low Level Design.**
+      - For the `have non-stop play when watching videos` we need to get future frames.
          
-       ![case 1](https://github.com/iancenry/Notes_and_basics/assets/77986239/dc0fff58-ad27-480c-b1c5-6c1d2270333a)
+    ![case 1](https://github.com/iancenry/Notes_and_basics/assets/77986239/dc0fff58-ad27-480c-b1c5-6c1d2270333a)
 
-        - From the use case diagram above, the `play` and `getVideoFrame` APIs are quite similar. At this point we ask ourselves `what does this product need?` and `Is playing the video different than fetching the future content?` Yes it is even though they are doing the same thing where in play the user is saying play me a video from this timestamp while in the other, the video player is saying `get me the video frame for this timestamp`. They are similar but the use cases are different. These 2 APIs are very similar so its better to merge them on the server side. /
+      - From the use case diagram above, the `play` and `getVideoFrame` APIs are quite similar. At this point we ask ourselves `what does this product need?` and `Is playing the video different than fetching the future content?` Yes it is even though they are doing the same thing where in play the user is saying play me a video from this timestamp while in the other, the video player is saying `get me the video frame for this timestamp`. They are similar but the use cases are different. These 2 APIs are very similar so its better to merge them on the server side.
         
-        ![case 2](https://github.com/iancenry/Notes_and_basics/assets/77986239/fd98d5bb-3d15-483a-a32b-6b51925cccee)
+     ![case 2](https://github.com/iancenry/Notes_and_basics/assets/77986239/fd98d5bb-3d15-483a-a32b-6b51925cccee)
 
     
     2. Class Diagrams - For every class we need to store states(data an object needs to perform behaviours eg to speak you need a throat, tongue, brain) and behaviours. For a video the states are `ID`,  `Frames`, `Metadata` and for behaviours `getFrame`.
