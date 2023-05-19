@@ -229,4 +229,5 @@
 ``` 
 
 - Use `lucid chart` to make the diagrams.
+- [System Design](https://www.youtube.com/@gkcs/videos)
  
